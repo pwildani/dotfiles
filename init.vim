@@ -7,6 +7,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'mhinz/vim-signify'
 
 " Plug 'w0rp/ale'
 call plug#end()
@@ -75,7 +76,7 @@ nmap <silent> <leader>F <ESC>:NERDTreeToggle<CR>
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
 \}
-function LC_buffer_config()
+function! LC_buffer_config()
   if has_key(g:LanguageClient_serverCommands, &filetype)
     nnoremap <buffer> <Leader>5 :call LanguageClient_contextMenu()<CR>
     nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -91,4 +92,8 @@ endfunction
 augroup LanguageClientSetup
    autocmd FileType * call LC_buffer_config()
 augroup END
+
+
+" Signify config: highlight vcs changes
+let g:signify_vcs_list = ['git']
 
