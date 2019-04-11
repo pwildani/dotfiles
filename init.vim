@@ -8,6 +8,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'mhinz/vim-signify'
+Plug 'thinca/vim-editvar'
 
 " Plug 'w0rp/ale'
 call plug#end()
@@ -60,6 +61,7 @@ if executable('rg')
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
 end
+let g:ctrlp_switch_buffer = 0
 
 " ALE config (linter, language server integration
 let g:ale_completion_enabled = 1
@@ -92,6 +94,42 @@ endfunction
 augroup LanguageClientSetup
    autocmd FileType * call LC_buffer_config()
 augroup END
+
+" It attempts to render any sign text after the source code, but doesn't trim
+" or wrap well, corrupting the display
+let g:LanguageClient_hoverPreview = 'Always'
+
+" The default signage uses double width emoji, which doesn't render well
+let g:LanguageClient_diagnosticsDisplay = {
+  \     1: {
+  \         "name": "Error",
+  \         "texthl": "ALEError",
+  \         "signText": "X",
+  \         "signTexthl": "ALEErrorSign",
+  \         "virtualTexthl": "Error",
+  \     },
+  \     2: {
+  \         "name": "Warning",
+  \         "texthl": "ALEWarning",
+  \         "signText": "W",
+  \         "signTexthl": "ALEWarningSign",
+  \         "virtualTexthl": "Todo",
+  \     },
+  \     3: {
+  \         "name": "Information",
+  \         "texthl": "ALEInfo",
+  \         "signText": "ℹ",
+  \         "signTexthl": "ALEInfoSign",
+  \         "virtualTexthl": "Todo",
+  \     },
+  \     4: {
+  \         "name": "Hint",
+  \         "texthl": "ALEInfo",
+  \         "signText": "",
+  \         "signTexthl": "ALEInfoSign",
+  \         "virtualTexthl": "Todo",
+  \     },
+  \ }
 
 
 " Signify config: highlight vcs changes
