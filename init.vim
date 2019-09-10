@@ -1,6 +1,12 @@
+"github.com/junegunn/vim-plug
 call plug#begin()
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+
+" Fast Search
 Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -9,6 +15,30 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'mhinz/vim-signify'
 Plug 'thinca/vim-editvar'
+"Plug 'zxqfl/tabnine-vim'
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+
+Plug 'jceb/vim-orgmode', {'for': 'org'}
+"orgmode deps
+  " Universal text linking"
+  "Plug 'vim-scripts/utl'
+  Plug 'inkarkat/vim-SyntaxRange'
+
+Plug 'majutsushi/tagbar'
+
+" Bunch of text objects.
+" target modifier: default: current n: next l: last
+" pairs: () {} [] B t b (any block)
+" quotes: ' " ` q (any quote)
+" separator: ,.;:+-=~_*#/|\&$
+" argument: a
+Plug 'wellle/targets.vim'
+
+" Surrounding editor
+" Add: sa <motion> <surrounding>
+" Remove: sd
+" Replace: sr
+Plug 'machakann/vim-sandwich'
 
 " Plug 'w0rp/ale'
 call plug#end()
@@ -20,6 +50,7 @@ set shiftwidth=2
 set hidden
 set autowrite
 let mapleader = ' '
+let maplocalleader = ','
 set wildmenu
 set wildmode=longest:full,full
 set encoding=utf8
@@ -35,13 +66,18 @@ nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
 set ruler
 
+" pip2 install neovim --upgrade
+" pip3 install neovim --upgrade
+let g:python2_host_prog = '/usr/local/bin/python' 
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 if executable('rg')
   set grepprg=rg\ --color=never
 end
 inoremap jj <Esc>
 
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files
 augroup last_edit
   autocmd!
   autocmd BufReadPost *
@@ -135,3 +171,9 @@ let g:LanguageClient_diagnosticsDisplay = {
 " Signify config: highlight vcs changes
 let g:signify_vcs_list = ['git']
 
+"orgmode config:
+let g:org_heading_shade_leading_stars=1
+let g:org_indent=1
+
+
+nnoremap <F8> :TagbarToggle<CR>
